@@ -71,4 +71,5 @@ code {
   font-family: sans-serif;
   border-radius: 5px;
   padding: 10px;
+  width: -webkit-fill-available;
 }
