@@ -63,3 +63,12 @@ code {
 .birthday p {
   margin-bottom: 0;
 }
+
+.clear-btn {
+  background-color: mediumpurple;
+  color: white;
+  font-weight: 700;
+  font-family: sans-serif;
+  border-radius: 5px;
+  padding: 10px;
+}

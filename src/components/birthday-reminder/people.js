@@ -1,4 +1,4 @@
-export const people = [
+export const data = [
     {
         name: "Barney Rubble",
         birthday: "26th of October",
@@ -17,7 +17,7 @@ export const people = [
     {
         name: "Dino Flintstone",
         birthday: "28th of June",
-        img: "https://static.wikia.nocookie.net/flinstones/images/d/d4/The_Flintstones_-_Clipart_-_Dino_-_8.png/revision/latest/top-crop/width/300/height/300?cb=20200326090727",
+        img: "https://img.sharetv.com/shows/characters/thumbnails/the_flintstone_kids.dino.jpg",
     },
     {
         name: "Mitichka",
