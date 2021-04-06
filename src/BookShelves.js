@@ -1,18 +1,15 @@
 import React from 'react';
-import { existingBooks } from './existingBooks'
 
-
-function Book({ title, author, style }) {
+function Book({ title, author, style, index, shelfLocation, onCategoryChange }) {
     let { width, height, backgroundImage } = style;
-    console.log(backgroundImage);
 
     return (
         <li>
-            <div className="book">
+            <div className="book" key={index} shelflocation={shelfLocation}>
                 <div className="book-top">
-                    <div className="book-cover" style={{ width: {width}, height: {height}, backgroundImage: `${backgroundImage}` }}></div>
+                    <div className="book-cover" style={{ width: {width}, height: {height}, backgroundImage: `url${backgroundImage}` }}></div>
                     <div className="book-shelf-changer">
-                        <select>
+                        <select onChange={((e) => {onCategoryChange(e)})}>
                             <option value="move" disabled>Move to...</option>
                             <option value="currentlyReading">Currently Reading</option>
                             <option value="wantToRead">Want to Read</option>
@@ -26,28 +23,33 @@ function Book({ title, author, style }) {
             </div>
         </li>
     )
-}
+};
 
 
-export default function Shelf() {
+export default function Shelf({ bookItems }) {
+    const filteredItems = (shelfName) => {
+        const bookDrillDown = bookItems.filter((bookItem) => bookItem.shelfLocation === shelfName);
+
+        return bookDrillDown.map((individualBook, index) => {
+            const { shelfLocation, title, author, style } = individualBook;
+            console.log(individualBook);
+            return <Book title={title} author={author} style={style} key={index} shelfLocation={shelfLocation} />
+            })
+    }
+
     return (
+        <div>
         <div>
             <div className="list-books">
                 <div className="list-books-title">
-                    <h1>MyReads</h1>
                 </div>
                 <div className="list-books-content">
                     <div>
                         <div className="bookshelf">
-                            <h2 className="bookshelf-title">Currently Reading</h2>
+                            <h1 className="bookshelf-title">My Reads</h1>
                             <div className="bookshelf-books">
                                 <ol className="books-grid">
-                                    {
-                                        existingBooks.map((existingBook) => {
-                                            const { title, author, style } = existingBook;
-                                            return <Book title={title} author={author} style={style} key={title}/>
-                                        })
-                                    }
+                                       {filteredItems("My Reads")}
                                 </ol>
                             </div>
                         </div>
@@ -55,5 +57,42 @@ export default function Shelf() {
                 </div>
             </div>
         </div>
+        <div>
+        <div className="list-books">
+            <div className="list-books-title">
+            </div>
+            <div className="list-books-content">
+                <div>
+                    <div className="bookshelf">
+                        <h1 className="bookshelf-title">To Read</h1>
+                        <div className="bookshelf-books">
+                            <ol className="books-grid">
+                            {filteredItems("To Read")}
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+    <div className="list-books">
+        <div className="list-books-title">
+        </div>
+        <div className="list-books-content">
+            <div>
+                <div className="bookshelf">
+                    <h1 className="bookshelf-title">Read</h1>
+                    <div className="bookshelf-books">
+                        <ol className="books-grid">
+                             {filteredItems("Read")}
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
     )
 }

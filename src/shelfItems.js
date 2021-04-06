@@ -1,10 +1,3 @@
-import React from 'react'
-import './App.css'
-import OpenSearch from './OpenSearch';
-import Shelf from './BookShelves'
-// import { bookItems } from './shelfItems';
-
-
 export const bookItems = [
     {
         shelfLocation: 'My Reads',
@@ -76,34 +69,4 @@ export const bookItems = [
             backgroundImage: 'http://books.google.com/books/content?id=32haAAAAMAAJ&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE72yckZ5f5bDFVIf7BGPbjA0KYYtlQ__nWB-hI_YZmZ-fScYwFy4O_fWOcPwf-pgv3pPQNJP_sT5J_xOUciD8WaKmevh1rUR-1jk7g1aCD_KeJaOpjVu0cm_11BBIUXdxbFkVMdi&source=gbs_api'
         }
     }
-];
-
-
-
-class BooksApp extends React.Component {
-
-
-    render() {
-        return (
-            <div className="app">
-                    <div className="search-books">
-                        <div className="search-books-bar">
-                            <button className="close-search" onClick={() => this.setState({ showSearchPage: false })}>Close</button>
-                            <div className="search-books-input-wrapper">
-                                <input type="text" placeholder="Search by title or author" />
-                            </div>
-                        </div>
-                        <div className="search-books-results">
-                            <ol className="books-grid">
-                            <Shelf bookItems={bookItems}/>
-                            </ol>
-                        </div>
-                    </div>
-                    <OpenSearch />
-               </div>
-        )
-    }
-}
-
-
-export default BooksApp
+]
