@@ -24,13 +24,17 @@ export default function BooksApp() {
     const searchForBooks = (r) => {
         console.log(r)
         search(r)
-        .then(res => setListOfBooks(res))
+        .then(res => {
+            debugger;
+            setListOfBooks(res)
+        })
+        .then(r => console.log(r))
     }
 
     // const searchResults = searchQuery === '' ? listOfBooks : listOfBooks.filter(book => console.log(book.title.toLowerCase().includes(searchQuery)));
     
     const onShelfUpdate = (updatedShelfName, currentBookID) => {
-        console.log(currentBookID, updatedShelfName)
+        // console.log(currentBookID, updatedShelfName)
         update(currentBookID, updatedShelfName)
         .then(() => getAll().then(res => setListOfBooks(res))
         )
@@ -43,9 +47,10 @@ export default function BooksApp() {
 
     return (
         <div className="app">
-            <div className="search-books">
+            {showSearchPage === true && (<div className="search-books">
                 <div className="search-books-bar">
-                    <button className="close-search" onClick={() => setShowSearchPage({ showSearchPage: true })}>Close</button>
+                    <button className="close-search" onClick={() => 
+                        setShowSearchPage(false)}>Close</button>
                     <div className="search-books-input-wrapper">
                         <input type="text" placeholder="Search by title or author" onChange={(e) =>
                             {
@@ -61,18 +66,17 @@ export default function BooksApp() {
                             console.log(r))}
                     </ol>
                 </div> */}
-            </div>
-            <div>
+            </div>)}
+            {showSearchPage === false && (<div>
                 <ol className="books-grid">
                     {shelfNames.map(shelf => <Shelf shelfName={shelf.title} onShelfUpdate={onShelfUpdate} books={listOfBooks.filter(book => book.shelf === shelf.id)} />)}
                 </ol>
                 <div className="open-search">
-                    <button onChange={() => {
-                        console.log('onChange detected')
+                    <button onClick={() => 
                         setShowSearchPage(true)
-                    }}>Add a book</button>
+                    }>Add a book</button>
                 </div>
-            </div>
+            </div>)}
         </div>
     )
 }

@@ -23,7 +23,7 @@ export default function Shelf({ shelfName, books, onShelfUpdate }) {
 
 
     const booksList = books.map(book => mapBook(book));
-    console.log('bookList', booksList)
+    // console.log('bookList', booksList)
 
     return (
         <div>
