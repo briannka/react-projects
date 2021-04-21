@@ -10,40 +10,33 @@ export default function BooksApp() {
     const [listOfBooks, setListOfBooks] = useState([]);
 
     const [showSearchPage, setShowSearchPage] = useState(false);
-    const [searchQuery, setSearchQuery] = useState('');
+    const [searchQuery, setSearchQuery] = useState(['']);
+    const[optionsState, setOptionsState] = useState('');
 
 
     useEffect(() => {
         getAll()
             .then(data => setListOfBooks(data))
-    }, [listOfBooks.length])
+
+        
+    }, [listOfBooks.length, onShelfUpdate])
 
 
 
-    useEffect(() => {
-        search('Android')
-        .then(res => console.log('this is the search() func res', res[0]))
-    })
     // useEffect(() => {
-    //     onShelfUpdate(updatedShelfName, currentBookID);
+    //     search(searchResults)
+    //     .then(res => console.log('this is the search() func res', res[0]))
+    // })
 
-    //     console.log('updated Shelf Name', updatedShelfName)
-    //     console.log('updated currentBookID', currentBookID)
-    //     // update(updatedShelfName, currentBookID)
-    //     // .then(res => setListOfBooks(res))
-    // }, [])
-
-
-    const searchResults = searchQuery === '' ? listOfBooks : searchQuery.filter((q) => q.title.toLowerCase().includes(searchQuery.toLowerCase()));
-    console.log(typeof searchResults)
-
+    // const searchResults = searchQuery === '' ? listOfBooks : listOfBooks.filter(book => console.log(book.title.toLowerCase().includes(searchQuery)));
+    
     const onShelfUpdate = (updatedShelfName, currentBookID) => {
         console.log(currentBookID, updatedShelfName)
-        getAll().then(res => console.log('second getAll fetch', res))
-
+        update(currentBookID, updatedShelfName);
+        getAll().then(res => setListOfBooks(res))
     };
 
-    const shelfNames = [{ id: 'currentlyReading', title: 'My Reads' }, { id: 'wantToRead', title: 'To Read' }, { id: 'read', title: 'Read' }, { id: 'none', title: 'None' }];
+    const shelfNames = [{ id: 'currentlyReading', title: 'My Reads' }, { id: 'wantToRead', title: 'To Read' }, { id: 'read', title: 'Read' }];
     if (listOfBooks.length <= 0) {
         return null
     }
@@ -57,15 +50,15 @@ export default function BooksApp() {
                         <input type="text" placeholder="Search by title or author" value={searchQuery} onChange={(e) =>
                             {
                             setSearchQuery(e.target.value);
-                        console.log(searchQuery)}} />
+                       }} />
                         </div>
                 </div>
-                <div className="search-books-results">
+                {/* <div className="search-books-results">
                     <ol className="books-grid">
                         {searchResults.map(r => 
-                            console.log(r.title))}
+                            console.log(r))}
                     </ol>
-                </div>
+                </div> */}
             </div>
             <div>
                 <ol className="books-grid">
