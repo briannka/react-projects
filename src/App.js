@@ -17,23 +17,23 @@ export default function BooksApp() {
     useEffect(() => {
         getAll()
             .then(data => setListOfBooks(data))
-
-        
-    }, [listOfBooks.length, onShelfUpdate])
+    }, [listOfBooks.length])
 
 
 
-    // useEffect(() => {
-    //     search(searchResults)
-    //     .then(res => console.log('this is the search() func res', res[0]))
-    // })
+    const searchForBooks = (r) => {
+        console.log(r)
+        search(r)
+        .then(res => setListOfBooks(res))
+    }
 
     // const searchResults = searchQuery === '' ? listOfBooks : listOfBooks.filter(book => console.log(book.title.toLowerCase().includes(searchQuery)));
     
     const onShelfUpdate = (updatedShelfName, currentBookID) => {
         console.log(currentBookID, updatedShelfName)
-        update(currentBookID, updatedShelfName);
-        getAll().then(res => setListOfBooks(res))
+        update(currentBookID, updatedShelfName)
+        .then(() => getAll().then(res => setListOfBooks(res))
+        )
     };
 
     const shelfNames = [{ id: 'currentlyReading', title: 'My Reads' }, { id: 'wantToRead', title: 'To Read' }, { id: 'read', title: 'Read' }];
@@ -47,9 +47,11 @@ export default function BooksApp() {
                 <div className="search-books-bar">
                     <button className="close-search" onClick={() => setShowSearchPage({ showSearchPage: true })}>Close</button>
                     <div className="search-books-input-wrapper">
-                        <input type="text" placeholder="Search by title or author" value={searchQuery} onChange={(e) =>
+                        <input type="text" placeholder="Search by title or author" onChange={(e) =>
                             {
-                            setSearchQuery(e.target.value);
+                            // setSearchQuery(e.target.value);
+                            searchForBooks(e.target.value)
+                            
                        }} />
                         </div>
                 </div>

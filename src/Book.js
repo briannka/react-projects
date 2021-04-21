@@ -5,26 +5,26 @@ import { update } from './BooksAPI'
 export default function Book(bookProps) {
     let { title, author, style, id, shelfLocation, onShelfUpdate } = bookProps.book;
     let { width, height, backgroundImage } = style;
+    const[value, setValue] = useState(shelfLocation);
 
 
     return (
         <li>
-            <div className="book" key={id} data-testid={id} shelflocation={shelfLocation}>
+            <div className="book" key={id} shelflocation={shelfLocation}>
                 <div className="book-top">
                     <div className="book-cover" style={{ width, height, backgroundImage: `url(${backgroundImage})` }}></div>
                     <div className="book-shelf-changer">
-                        <select value={''} onChange={((e) => {
-                            let updatedShelfName = (e.target.value === "My Reads") 
-                            ? "currentlyReading" : (e.target.value === "Read")
+                        <select value={value} onChange={((e) => {
+                            setValue(e.target.value);
+                            let updatedShelfName = (e.target.value === "currentlyReading") 
+                            ? "currentlyReading" : (e.target.value === "read")
                             ? "read" : "wantToRead";
-                            let currentBookID = e.nativeEvent.path[3].dataset['testid'];
-                            onShelfUpdate(updatedShelfName, currentBookID);
-                            setOptionsState(e.target.value)
+                            onShelfUpdate(updatedShelfName, id);
                         })} >
                             <option value="move" disabled>Move to...</option>
-                            <option value="My Reads" data-testid="currentlyReading">Currently Reading</option>
-                            <option value="To Read" data-testid="wantToRead" selected>Want to Read</option>
-                            <option value="Read" data-testid="read">Read</option>
+                            <option value="currentlyReading" >Currently Reading</option>
+                            <option value="wantToRead" >Want to Read</option>
+                            <option value="read" >Read</option>
                             <option value="none">None</option>
                         </select>
                     </div>
