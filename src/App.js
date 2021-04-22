@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import './App.css'
-import { OpenSearch, DisplaySearchBar } from './OpenSearch';
 import Shelf from './BookShelves'
+import Book from './Book'
 import { getAll, update, search } from './BooksAPI'
 import { updateExpression } from '@babel/types';
+import SearchItemsBody from './SearchItemsBody';
 
 
 export default function BooksApp() {
     const [listOfBooks, setListOfBooks] = useState([]);
-
     const [showSearchPage, setShowSearchPage] = useState(false);
-    const [searchQuery, setSearchQuery] = useState(['']);
-    const[optionsState, setOptionsState] = useState('');
+    const [searchQuery, setSearchQuery] = useState([]);
+    const [searchedBooks, setSearchedBooks] = useState([]);
 
 
     useEffect(() => {
@@ -21,20 +21,20 @@ export default function BooksApp() {
 
 
 
-    const searchForBooks = (r) => {
-        console.log(r)
-        search(r)
+    const searchForBooks = (query) => {
+        console.log(query);
+        debugger
+        search(query)
         .then(res => {
+            console.log(res);
             debugger;
-            setListOfBooks(res)
+            (res === '' || res.error || !res) ? console.log('this is where it goes wrong') : setSearchedBooks(res);
         })
-        .then(r => console.log(r))
-    }
+        .catch((e) =>{
+            console.log('Oopsies, there\'s been an error!', e)})
+        }
 
-    // const searchResults = searchQuery === '' ? listOfBooks : listOfBooks.filter(book => console.log(book.title.toLowerCase().includes(searchQuery)));
-    
     const onShelfUpdate = (updatedShelfName, currentBookID) => {
-        // console.log(currentBookID, updatedShelfName)
         update(currentBookID, updatedShelfName)
         .then(() => getAll().then(res => setListOfBooks(res))
         )
@@ -54,18 +54,11 @@ export default function BooksApp() {
                     <div className="search-books-input-wrapper">
                         <input type="text" placeholder="Search by title or author" onChange={(e) =>
                             {
-                            // setSearchQuery(e.target.value);
                             searchForBooks(e.target.value)
-                            
                        }} />
                         </div>
                 </div>
-                {/* <div className="search-books-results">
-                    <ol className="books-grid">
-                        {searchResults.map(r => 
-                            console.log(r))}
-                    </ol>
-                </div> */}
+                    {/* <SearchItemsBody searchedBooks={searchedBooks}/> */}
             </div>)}
             {showSearchPage === false && (<div>
                 <ol className="books-grid">

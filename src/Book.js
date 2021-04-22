@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, defaultProps } from 'react'
 import { update } from './BooksAPI'
 
 
@@ -36,3 +36,14 @@ export default function Book(bookProps) {
     )
 };
 
+Book.defaultProps = {
+    title: 'No title available',
+    author: 'None', 
+    style: {
+        width: "200px", 
+        height: "200px", 
+        backgroundImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/480px-No_image_available.svg.png"
+    }, 
+    id: 'none',
+    shelfLocation: 'searchBarResults' 
+}
