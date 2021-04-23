@@ -1,10 +1,9 @@
 import React, { useState, defaultProps } from 'react'
-import { update } from './BooksAPI'
 
 
 export default function Book(bookProps) {
-    let { title, author, style, id, shelfLocation, onShelfUpdate } = bookProps.book;
-    let { width, height, backgroundImage } = style;
+    let { title, author, style, id, shelfLocation = 'none', onShelfUpdate } = bookProps.book;
+    let { width, height, backgroundImage = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/480px-No_image_available.svg.png" } = style;
     const[value, setValue] = useState(shelfLocation);
 
 
@@ -45,5 +44,5 @@ Book.defaultProps = {
         backgroundImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/480px-No_image_available.svg.png"
     }, 
     id: 'none',
-    shelfLocation: 'searchBarResults' 
+    shelfLocation: 'none'
 }
